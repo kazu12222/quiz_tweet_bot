@@ -1,4 +1,4 @@
-var time = require("./bots_puppetter.js");
+var time = require("./bots_puppeteer.js");
 require("dotenv").config();
 const { TwitterApi } = require("twitter-api-v2");
 const { WaitTask } = require("puppeteer");
