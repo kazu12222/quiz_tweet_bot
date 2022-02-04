@@ -12,13 +12,16 @@
 
 3,必要な node モジュールをインストール
 
+$ npm init
+[](出てくる項目は全てEnter)
+
 $ npm i date-utils
 
 $ npm i dotenv
 
 $ npm i puppeteer
 
-$ twitter-api-v2
+$ npm i twitter-api-v2
 
 4,.env 作成
 
