@@ -12,7 +12,7 @@ async function getQuizElement() {
   let cnt = 0;
 
   page.setDefaultTimeout(100000);
-  await page.goto("https://dev-quizhub.web.app/", {
+  await page.goto(process.env.URL, {
     waitUntil: ["load", "networkidle2"],
   });
   await page.setCacheEnabled(false);
