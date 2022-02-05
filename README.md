@@ -33,6 +33,8 @@ ACCESS_TOKEN_KEY=
 
 ACCESS_TOKEN_SECRET=
 
+URL=
+
 ## Build Setup
 
 1,crontab 作成
