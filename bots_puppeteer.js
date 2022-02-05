@@ -1,28 +1,28 @@
 const puppeteer = require("puppeteer");
 require("date-utils");
-async function getQuizElement() {
+async function getQuizElement(quizSiteUrl) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  let dt = new Date();
-  let dtFormatted = dt.toFormat("YYYYMMDDHH24MI");
-  let listSelector = ".content-link";
-  let titleSelector = ".card-title";
-  let userSelector = ".quiz-content__user";
-  let createTimeSelector = ".quiz-content__create";
+  const dt = new Date();
+  const dtFormatted = dt.toFormat("YYYYMMDDHH24MI");
+  const listSelector = ".content-link";
+  const titleSelector = ".card-title";
+  const userSelector = ".quiz-content__user";
+  const createTimeSelector = ".quiz-content__create";
   let cnt = 0;
 
   page.setDefaultTimeout(100000);
-  await page.goto(process.env.URL, {
+  await page.goto(quizSiteUrl, {
     waitUntil: ["load", "networkidle2"],
   });
   await page.setCacheEnabled(false);
   await page.reload({ waitUntil: "networkidle2" });
-  let list = await page.$$(listSelector);
-  let title = await page.$$(titleSelector);
-  let user = await page.$$(userSelector);
-  let createTime = await page.$$(createTimeSelector);
-  let ansDate = [];
-  let quizData = [];
+  const list = await page.$$(listSelector);
+  const title = await page.$$(titleSelector);
+  const user = await page.$$(userSelector);
+  const createTime = await page.$$(createTimeSelector);
+  const ansDate = [];
+  const quizData = [];
   for (let i = 0; i < 5; i++) {
     let data = {
       href: await (await list[i].getProperty("href")).jsonValue(),
