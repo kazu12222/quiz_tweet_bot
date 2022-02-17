@@ -35,6 +35,18 @@ ACCESS_TOKEN_SECRET=
 
 QUIZ_SITE_URL=
 
+LOGIN_USER_MAIL =
+
+LOGIN_PASS =
+
+LOGIN_MAIL_SELECTOR = input[type=email]
+
+LOGIN_PASS_SELECTOR = input[type=password]
+
+LOGIN_SUBMIT_SELECTOR = button[type=submit]
+
+CHOOSE_LOGINWAY_MAIL = button[data-provider-id=password]
+
 ## Build Setup
 
 1,crontab 作成

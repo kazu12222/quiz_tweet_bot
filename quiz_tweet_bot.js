@@ -15,10 +15,8 @@ const twitterClient = new TwitterApi({
   const rwClient = twitterClient.readWrite;
   const appOnlyClientFromConsumer = await twitterClient.appLogin();
   const quizSiteUrl = process.env.QUIZ_SITE_URL;
-  const [botsData, cnt, ansOpenDateValue] = await time.getQuizElement(
-    quizSiteUrl
-  );
-  for (let i = 0; i < cnt; i++) {
+  const [botsData, ansOpenDateValue] = await time.getQuizElement(quizSiteUrl);
+  for (let i = 0; i < botsData.length; i++) {
     let href = botsData[i].href;
     let title = botsData[i].title;
     let user = botsData[i].user;
