@@ -46,7 +46,7 @@ async function getQuizElement(quizSiteUrl) {
     };
     let createTimeString = object.createTime.toString();
     let createTimeParse = Date.parse(createTimeString);
-    if (dtParse - 1000000 < createTimeParse && createTimeParse <= dtParse) {
+    if (dtParse - 3600000 < createTimeParse && createTimeParse <= dtParse) {
       let stringtext = object.textContent.toString();
       let temp = stringtext.match(/解答公開日：.+/);
       let ansDay;
