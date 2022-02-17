@@ -7,10 +7,10 @@ waitTime = 3000;
 const LOGIN_URL = process.env.LOGIN_URL;
 const LOGIN_USER_MAIL = process.env.LOGIN_USER_MAIL;
 const LOGIN_PASS = process.env.LOGIN_PASS;
-const QUIZHUB_LOGIN_MAIL_SELECTOR = process.env.QUIZHUB_LOGIN_MAIL_SELECTOR;
-const LOGIN_PASS_SELECTOR = process.env.LOGIN_PASS_SELECTOR;
-const LOGIN_SUBMIT_SELECTOR = process.env.LOGIN_SUBMIT_SELECTOR;
-const CHOOSE_LOGIN_MAIL = process.env.CHOOSE_LOGIN_MAIL;
+const QUIZHUB_LOGIN_MAIL_SELECTOR = "input[type=email]";
+const QUIZHUB_LOGIN_PASS_SELECTOR = "input[type=password]";
+const QUIZHUB_LOGIN_SUBMIT_SELECTOR = "button[type=submit]";
+const QUIZHUB_CHOOSE_LOGIN_MAIL = "button[data-provider-id=password]";
 
 async function getQuizElement(quizSiteUrl) {
   const browser = await puppeteer.launch();
@@ -65,14 +65,14 @@ async function getQuizElement(quizSiteUrl) {
   await page.setCacheEnabled(false);
   await page.reload({ waitUntil: "networkidle2" });
 
-  await page.click(CHOOSE_LOGIN_MAIL);
+  await page.click(QUIZHUB_CHOOSE_LOGIN_MAIL);
   await sleep(waitTime);
   await page.type(QUIZHUB_LOGIN_MAIL_SELECTOR, LOGIN_USER_MAIL);
   await sleep(waitTime);
-  await page.click(LOGIN_SUBMIT_SELECTOR);
+  await page.click(QUIZHUB_LOGIN_SUBMIT_SELECTOR);
   await sleep(waitTime);
-  await page.type(LOGIN_PASS_SELECTOR, LOGIN_PASS);
-  await page.click(LOGIN_SUBMIT_SELECTOR);
+  await page.type(QUIZHUB_LOGIN_PASS_SELECTOR, LOGIN_PASS);
+  await page.click(QUIZHUB_LOGIN_SUBMIT_SELECTOR);
   await sleep(waitTime);
   for (let i = 0; i < quizzes.length; i++) {
     console.log(quizzes[i].href);
