@@ -1,4 +1,4 @@
-let time = require("./bots_puppeteer.js");
+let siteInfomation = require("./get_quiz_information.js");
 require("dotenv").config();
 const { TwitterApi } = require("twitter-api-v2");
 const { WaitTask } = require("puppeteer");
@@ -15,7 +15,9 @@ const twitterClient = new TwitterApi({
   const rwClient = twitterClient.readWrite;
   const appOnlyClientFromConsumer = await twitterClient.appLogin();
   const quizSiteUrl = process.env.QUIZ_SITE_URL;
-  const [quizzes, answerPublishDate] = await time.getQuizElement(quizSiteUrl);
+  const [quizzes, answerPublishDate] = await siteInfomation.getQuizElement(
+    quizSiteUrl
+  );
   for (let i = 0; i < quizzes.length; i++) {
     let href = quizzes[i].href;
     let title = quizzes[i].title;
