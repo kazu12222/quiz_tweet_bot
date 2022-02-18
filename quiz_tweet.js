@@ -1,4 +1,4 @@
-let siteInfomation = require("./get_quiz_information.js");
+let siteInfomation = require("./get_quiz.js");
 require("dotenv").config();
 const { TwitterApi } = require("twitter-api-v2");
 const { WaitTask } = require("puppeteer");
@@ -35,9 +35,10 @@ const twitterClient = new TwitterApi({
         ? stringAnsDay.replace(/[^0-9/]|/g, "")
         : null;
     }
-    const selectTweet =
-      answerPublishDate[i] !== null ? "日は${ansOpenDate}" : "は公開済み";
-    const tweetContents = `${user}さんから新規Quizご登録いただきました！\n一般解答公開${selectTweet}です。\n\n${title} ${createTime})\n #AAAAAA\n${href}`;
+    const selectTweet = answerPublishDate[i]
+      ? "日は${ansOpenDate}"
+      : "は公開済み";
+    const tweetContents = `${user}さんから新規Quizご登録いただきました！\n一般解答公開${selectTweet}です。\n\n${title} (${createTime})\n #AAAAAA\n${href}`;
     await twitterClient.v2.tweet(tweetContents);
 
     async function sleep() {
