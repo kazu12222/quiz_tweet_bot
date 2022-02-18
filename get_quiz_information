@@ -17,20 +17,16 @@ async function getQuizElement(quizSiteUrl) {
   const page = await browser.newPage();
   const dt = new Date();
   const dtParse = Date.parse(dt);
-  const listElements = ".content-link";
-  const userElements = ".quiz-content__user";
-  const createTimeElements = ".quiz-content__create";
-
   page.setDefaultTimeout(100000);
   await page.goto(quizSiteUrl, {
     waitUntil: ["load", "networkidle2"],
   });
   await page.setCacheEnabled(false);
   await page.reload({ waitUntil: "networkidle2" });
-  const list = await page.$$(listElements);
+  const list = await page.$$(".content-link");
   const title = await page.$$(".card-title");
-  const user = await page.$$(userElements);
-  const createTime = await page.$$(createTimeElements);
+  const user = await page.$$(".quiz-content__user");
+  const createTime = await page.$$(".quiz-content__create");
   const answerPublishDate = [];
   const quizzes = [];
   for (let i = 0; i < 5; i++) {
