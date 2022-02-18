@@ -17,9 +17,9 @@ async function getQuizElement(quizSiteUrl) {
   const page = await browser.newPage();
   const dt = new Date();
   const dtParse = Date.parse(dt);
-  const listSelector = ".content-link";
-  const userSelector = ".quiz-content__user";
-  const createTimeSelector = ".quiz-content__create";
+  const listElements = ".content-link";
+  const userElements = ".quiz-content__user";
+  const createTimeElements = ".quiz-content__create";
 
   page.setDefaultTimeout(100000);
   await page.goto(quizSiteUrl, {
@@ -27,14 +27,14 @@ async function getQuizElement(quizSiteUrl) {
   });
   await page.setCacheEnabled(false);
   await page.reload({ waitUntil: "networkidle2" });
-  const list = await page.$$(listSelector);
+  const list = await page.$$(listElements);
   const title = await page.$$(".card-title");
-  const user = await page.$$(userSelector);
-  const createTime = await page.$$(createTimeSelector);
+  const user = await page.$$(userElements);
+  const createTime = await page.$$(createTimeElements);
   const answerPublishDate = [];
   const quizzes = [];
   for (let i = 0; i < 5; i++) {
-    let object = {
+    const object = {
       href: await (await list[i].getProperty("href")).jsonValue(),
       textContent: await (await list[i].getProperty("textContent")).jsonValue(),
       html: await (await list[i].getProperty("innerHTML")).jsonValue(),
@@ -44,17 +44,12 @@ async function getQuizElement(quizSiteUrl) {
         await createTime[i].getProperty("textContent")
       ).jsonValue(),
     };
-    let createTimeString = object.createTime.toString();
-    let createTimeParse = Date.parse(createTimeString);
+    const createTimeString = object.createTime.toString();
+    const createTimeParse = Date.parse(createTimeString);
     if (dtParse - 3600000 < createTimeParse && createTimeParse <= dtParse) {
-      let stringAnswerPublishDate = object.textContent.toString();
-      let str = stringAnswerPublishDate.match(/解答公開日：.+/);
-      let ansDay;
-      if (str !== null) {
-        ansDay = str[0];
-      } else {
-        ansDay = null;
-      }
+      const stringAnswerPublishDate = object.textContent.toString();
+      const str = stringAnswerPublishDate.match(/解答公開日：.+/);
+      const ansDay = str !== null ? str[0] : null;
       answerPublishDate.push(ansDay);
       quizzes.push(object);
     }
@@ -77,7 +72,7 @@ async function getQuizElement(quizSiteUrl) {
       waitUntil: ["load", "networkidle2"],
     });
     await sleep(waitTime);
-    let actionElements = await page.$$(".action");
+    const actionElements = await page.$$(".action");
     await actionElements[0].click();
 
     await sleep(waitTime);
