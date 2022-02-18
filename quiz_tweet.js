@@ -20,22 +20,24 @@ const twitterClient = new TwitterApi({
   );
   for (let i = 0; i < quizzes.length; i++) {
     const href = quizzes[i].href;
-    let title = quizzes[i].title;
-    let user = quizzes[i].user;
+    const title = quizzes[i].title;
+    const user = quizzes[i].user;
     let createTime = quizzes[i].createTime;
-    let stringTime = quizzes[i].createTime.toString();
-    stringTime = stringTime.slice(0, 10);
-    createTime = isNaN(stringTime) ? stringTime.replace(/[^0-9/]|/g, "") : null;
+    const stringTime = quizzes[i].createTime.toString();
+    const getStringTime = stringTime.slice(0, 10);
+    createTime = isNaN(getStringTime)
+      ? getStringTime.replace(/[^0-9/]|/g, "")
+      : null;
     if (answerPublishDate[i] !== null) {
       let ansOpenDate = answerPublishDate[i];
-      let stringAnsDay = ansOpenDate.toString();
+      const stringAnsDay = ansOpenDate.toString();
       ansOpenDate = isNaN(stringAnsDay)
         ? stringAnsDay.replace(/[^0-9/]|/g, "")
         : null;
     }
-    let tweetContents = `${user}さんから新規Quizご登録いただきました！\n一般解答公開${
-      answerPublishDate[i] !== null ? "日は${ansOpenDate}" : "は公開済み"
-    }です。\n\n${title} ${createTime})\n #AAAAAA\n${href}`;
+    const selectTweet =
+      answerPublishDate[i] !== null ? "日は${ansOpenDate}" : "は公開済み";
+    const tweetContents = `${user}さんから新規Quizご登録いただきました！\n一般解答公開${selectTweet}です。\n\n${title} ${createTime})\n #AAAAAA\n${href}`;
     await twitterClient.v2.tweet(tweetContents);
 
     async function sleep() {
