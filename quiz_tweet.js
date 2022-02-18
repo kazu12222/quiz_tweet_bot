@@ -19,47 +19,28 @@ const twitterClient = new TwitterApi({
     quizSiteUrl
   );
   for (let i = 0; i < quizzes.length; i++) {
-    let href = quizzes[i].href;
+    const href = quizzes[i].href;
     let title = quizzes[i].title;
     let user = quizzes[i].user;
     let createTime = quizzes[i].createTime;
-    let structTime = quizzes[i].createTime.toString();
-    structTime = structTime.slice(0, 10);
-    createTime = isNaN(structTime) ? structTime.replace(/[^0-9/]|/g, "") : null;
+    let stringTime = quizzes[i].createTime.toString();
+    stringTime = stringTime.slice(0, 10);
+    createTime = isNaN(stringTime) ? stringTime.replace(/[^0-9/]|/g, "") : null;
     if (answerPublishDate[i] !== null) {
       let ansOpenDate = answerPublishDate[i];
-      let structAnsDay = ansOpenDate.toString();
-      ansOpenDate = isNaN(structAnsDay)
-        ? structAnsDay.replace(/[^0-9/]|/g, "")
+      let stringAnsDay = ansOpenDate.toString();
+      ansOpenDate = isNaN(stringAnsDay)
+        ? stringAnsDay.replace(/[^0-9/]|/g, "")
         : null;
-      await twitterClient.v2.tweet(
-        user +
-          "さんから新規Quizご登録いただきました！\n一般解答公開日は" +
-          ansOpenDate +
-          "です。\n\n" +
-          title +
-          "(" +
-          createTime +
-          ")\n" +
-          "#AAAAAA\n" +
-          href
-      );
-    } else {
-      await twitterClient.v2.tweet(
-        user +
-          "さんから新規Quizご登録いただきました！\n一般解答公開は公開済みです。\n\n" +
-          title +
-          "(" +
-          createTime +
-          ")\n" +
-          "#AAAAAA\n" +
-          href
-      );
     }
+    let tweetContents = `${user}さんから新規Quizご登録いただきました！\n一般解答公開${
+      answerPublishDate[i] !== null ? "日は${ansOpenDate}" : "は公開済み"
+    }です。\n\n${title} ${createTime})\n #AAAAAA\n${href}`;
+    await twitterClient.v2.tweet(tweetContents);
+
     async function sleep() {
       await new Promise((s) => setTimeout(s, 3000));
     }
     sleep();
-    console.log("3秒経過しました！");
   }
 })();
