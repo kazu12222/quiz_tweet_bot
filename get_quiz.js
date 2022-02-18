@@ -5,8 +5,8 @@ const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 const waitTime = 3000;
 
 const LOGIN_URL = process.env.LOGIN_URL;
-const LOGIN_USER_MAIL = process.env.LOGIN_USER_MAIL;
-const LOGIN_PASS = process.env.LOGIN_PASS;
+const QUIZHUB_LOGIN_USER_MAIL = process.env.QUIZHUB_LOGIN_USER_MAIL;
+const QUIZHUB_LOGIN_PASSWORD = process.env.QUIZHUB_LOGIN_PASSWORD;
 const QUIZHUB_LOGIN_MAIL = "input[type=email]";
 const QUIZHUB_LOGIN_PASS = "input[type=password]";
 const QUIZHUB_LOGIN_SUBMIT = "button[type=submit]";
@@ -55,11 +55,11 @@ async function getQuizElement(quizSiteUrl) {
 
   await page.click(QUIZHUB_CHOOSE_LOGIN_MAIL);
   await sleep(waitTime);
-  await page.type(QUIZHUB_LOGIN_MAIL, LOGIN_USER_MAIL);
+  await page.type(QUIZHUB_LOGIN_MAIL, QUIZHUB_LOGIN_USER_MAIL);
   await sleep(waitTime);
   await page.click(QUIZHUB_LOGIN_SUBMIT);
   await sleep(waitTime);
-  await page.type(QUIZHUB_LOGIN_PASS, LOGIN_PASS);
+  await page.type(QUIZHUB_LOGIN_PASS, QUIZHUB_LOGIN_PASSWORD);
   await page.click(QUIZHUB_LOGIN_SUBMIT);
   await sleep(waitTime);
   for (let i = 0; i < quizzes.length; i++) {
