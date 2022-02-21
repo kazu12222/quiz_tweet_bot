@@ -28,8 +28,9 @@ const twitterClient = new TwitterApi({
     createTime = isNaN(getStringTime)
       ? getStringTime.replace(/[^0-9/]|/g, "")
       : null;
+    let ansOpenDate;
     if (answerPublishDate[i] !== null) {
-      let ansOpenDate = answerPublishDate[i];
+      ansOpenDate = answerPublishDate[i];
       const stringAnsDay = ansOpenDate.toString();
       ansOpenDate = isNaN(stringAnsDay)
         ? stringAnsDay.replace(/[^0-9/]|/g, "")
